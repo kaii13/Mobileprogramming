@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    background-color: orange;
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.red, .blue, .green, .yellow {
+    padding: 30px;
+    margin: 40px;
+    color: white;
+}
+
+.red { background-color: red; }
+.blue { background-color: blue; }
+.green { background-color: green; }
+.yellow { background-color: yellow; }
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+
+/* Bomb explosion */
+#explosion {
+    width: 0px;
+    height: 0px;
+    border-radius: 50%;
+    background: radial-gradient(circle, yellow 0%, orange 50%, red 100%);
+    position: absolute;
+    display: none;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.9;
+    animation: explode 0.8s forwards;
+}
+
+@keyframes explode {
+    0% { transform: scale(0); opacity: 1; }
+    50% { transform: scale(2); opacity: 0.8; }
+    100% { transform: scale(3); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="red"> 
+    <div>Kathmandu</div>
+    <div>Bhaktapur</div>
+    <button id="colorButton">Click to change colors</button>    
+</div>
+
+<div class="blue">
+    <div>Lalitpur</div>
+    <div>Chitwan</div>
+</div>
+
+<div class="green">
+    <div>Pokhara</div>
+    <div>Lumbini</div>
+</div>
+
+<div class="yellow">
+    <div>Mustang</div>
+    <div>Manang</div>
+</div>
+
+<!-- Explosion element -->
+<div id="explosion"></div>
+
+<script>
+function changeColors() {
+    const divs = document.querySelectorAll('.red, .blue, .green, .yellow');
+    divs.forEach(div => {
+        div.style.backgroundColor = div.style.backgroundColor === 'black' ? div.getAttribute('data-original') : 'black';
+    });
+}
+
+const button = document.getElementById('colorButton');
+const explosion = document.getElementById('explosion');
+
+button.addEventListener('click', function(event) {
+    // Show alert message
+    alert("Chall tere baap ko mat sika!");
+
+    // Change colors
+    changeColors();
+
+    // Show explosion at button position
+    const rect = button.getBoundingClientRect();
+    explosion.style.left = rect.left + window.scrollX + rect.width / 2 - 50 + "px";
+    explosion.style.top = rect.top + window.scrollY + rect.height / 2 - 50 + "px";
+    explosion.style.display = "block";
+    explosion.style.width = "100px";
+    explosion.style.height = "100px";
+
+    // Restart animation
+    explosion.style.animation = 'none';
+    explosion.offsetHeight; // trigger reflow
+    explosion.style.animation = 'explode 0.8s forwards';
+
+    // Hide explosion after animation
+    setTimeout(() => {
+        explosion.style.display = "none";
+    }, 800);
+});
+</script>
+
+</body>
+</html>
