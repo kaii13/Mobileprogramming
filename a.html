@@ -1,116 +1,135 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-body {
-    background-color: orange;
-    position: relative;
-    height: 100vh;
-    overflow: hidden;
-}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            margin: 0;
+            padding: 20px;
+        }
 
-.red, .blue, .green, .yellow {
-    padding: 30px;
-    margin: 40px;
-    color: white;
-}
+        .group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.8);
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
 
-.red { background-color: red; }
-.blue { background-color: blue; }
-.green { background-color: green; }
-.yellow { background-color: yellow; }
+        .group:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
 
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    position: relative;
-    z-index: 1;
-}
+        .box {
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 500;
+            transition: all 0.5s ease;
+        }
 
-/* Bomb explosion */
-#explosion {
-    width: 0px;
-    height: 0px;
-    border-radius: 50%;
-    background: radial-gradient(circle, yellow 0%, orange 50%, red 100%);
-    position: absolute;
-    display: none;
-    pointer-events: none;
-    z-index: 100;
-    opacity: 0.9;
-    animation: explode 0.8s forwards;
-}
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background: linear-gradient(45deg, #f6d365, #fda085);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
 
-@keyframes explode {
-    0% { transform: scale(0); opacity: 1; }
-    50% { transform: scale(2); opacity: 0.8; }
-    100% { transform: scale(3); opacity: 0; }
-}
-</style>
+        .button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        img {
+            border-radius: 10px;
+            max-width: 150px;
+            transition: transform 0.3s ease;
+        }
+
+        img:hover {
+            transform: scale(1.1);
+        }
+    </style>
 </head>
 <body>
 
-<div class="red"> 
-    <div>Kathmandu</div>
-    <div>Bhaktapur</div>
-    <button id="colorButton">Click to change colors</button>    
+<div class="group" id="group1">
+    <div id="box1" class="box">This is text of group 1</div>
+    <button class="button" onclick="changeFontSize()">Change Font Size</button>
 </div>
 
-<div class="blue">
-    <div>Lalitpur</div>
-    <div>Chitwan</div>
+<div class="group" id="group2">
+    <div id="box3" class="box">Group 2</div>
+    <button class="button" onclick="changeStyle()">Change Style</button>
 </div>
 
-<div class="green">
-    <div>Pokhara</div>
-    <div>Lumbini</div>
+<div class="group" id="group3">
+    <div id="box5" class="box">Group 3</div>
+    <button class="button" onclick="changeImage()">Change Image</button>
 </div>
 
-<div class="yellow">
-    <div>Mustang</div>
-    <div>Manang</div>
+<div class="group" id="group4">
+    <div id="box7" class="box">Group 4</div>
+    <button class="button" onclick="addText()">Change Text</button>
 </div>
-
-<!-- Explosion element -->
-<div id="explosion"></div>
 
 <script>
-function changeColors() {
-    const divs = document.querySelectorAll('.red, .blue, .green, .yellow');
-    divs.forEach(div => {
-        div.style.backgroundColor = div.style.backgroundColor === 'black' ? div.getAttribute('data-original') : 'black';
-    });
+// Group 1: Toggle font size
+let fontLarge = false;
+function changeFontSize() {
+    const box1 = document.getElementById('box1');
+    fontLarge = !fontLarge;
+    box1.style.fontSize = fontLarge ? "28px" : "18px";
+    box1.style.color = fontLarge ? "#ff6b81" : "#000";
+    box1.style.fontWeight = fontLarge ? "bold" : "500";
 }
 
-const button = document.getElementById('colorButton');
-const explosion = document.getElementById('explosion');
+// Group 2: Toggle style
+let styleApplied = false;
+function changeStyle() {
+    const box3 = document.getElementById('box3');
+    styleApplied = !styleApplied;
+    box3.style.fontStyle = styleApplied ? "italic" : "normal";
+    box3.style.color = styleApplied ? "#1e90ff" : "#000";
+    box3.style.backgroundColor = styleApplied ? "#ffeaa7" : "transparent";
+    box3.style.padding = styleApplied ? "20px" : "15px";
+    box3.style.borderRadius = styleApplied ? "12px" : "10px";
+}
 
-button.addEventListener('click', function(event) {
-    // Show alert message
-    alert("Chall tere baap ko mat sika!");
+// Group 3: Toggle image
+let imageShown = false;
+function changeImage() {
+    const box5 = document.getElementById('box5');
+    imageShown = !imageShown;
+    box5.innerHTML = imageShown 
+        ? '<img src="https://via.placeholder.com/150" alt="Image">' 
+        : 'Group 3';
+}
 
-    // Change colors
-    changeColors();
-
-    // Show explosion at button position
-    const rect = button.getBoundingClientRect();
-    explosion.style.left = rect.left + window.scrollX + rect.width / 2 - 50 + "px";
-    explosion.style.top = rect.top + window.scrollY + rect.height / 2 - 50 + "px";
-    explosion.style.display = "block";
-    explosion.style.width = "100px";
-    explosion.style.height = "100px";
-
-    // Restart animation
-    explosion.style.animation = 'none';
-    explosion.offsetHeight; // trigger reflow
-    explosion.style.animation = 'explode 0.8s forwards';
-
-    // Hide explosion after animation
-    setTimeout(() => {
-        explosion.style.display = "none";
-    }, 800);
-});
+// Group 4: Toggle text
+let textChanged = false;
+function addText() {
+    const box7 = document.getElementById('box7');
+    textChanged = !textChanged;
+    box7.innerHTML = textChanged ? "Group 4 text changed!" : "Group 4";
+    box7.style.color = textChanged ? "#6c5ce7" : "#000";
+    box7.style.fontWeight = textChanged ? "bold" : "500";
+    box7.style.backgroundColor = textChanged ? "#dfe6e9" : "transparent";
+    box7.style.padding = textChanged ? "15px" : "15px";
+    box7.style.borderRadius = textChanged ? "12px" : "10px";
+}
 </script>
 
 </body>
