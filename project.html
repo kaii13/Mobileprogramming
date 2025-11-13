@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple Box Animation</title>
+<style>
+#box {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  color: white;
+  position: relative;
+  text-align: center;
+  line-height: 100px;
+  font-family: Arial;
+  font-size: 20px;
+  transition: all 1s;
+}
+</style>
+</head>
+<body>
+
+<h2>Simple Animation Example</h2>
+
+<div id="box">Hello</div><br>
+<button onclick="moveBox()">Click Me</button>
+
+<script>
+let moved = false;
+
+function moveBox() {
+  let box = document.getElementById("box");
+  if (!moved) {
+    box.style.left = "200px";           // move right
+    box.style.backgroundColor = "blue"; // change color
+    box.style.fontFamily = "Courier New"; // change font
+    box.style.fontSize = "30px";        // increase font size
+    box.style.width = "150px";          // increase width
+    box.style.height = "150px";         // increase height
+    box.textContent = "Moved!";
+  } else {
+    box.style.left = "0px";             // move back
+    box.style.backgroundColor = "red";  // original color
+    box.style.fontFamily = "Arial";     // original font
+    box.style.fontSize = "20px";        // original font size
+    box.style.width = "100px";          // original width
+    box.style.height = "100px";         // original height
+    box.textContent = "Hello";
+  }
+  moved = !moved;
+}
+</script>
+
+</body>
+</html>
